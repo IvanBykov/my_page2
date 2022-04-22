@@ -21,6 +21,36 @@ zodiac_dict = {
 
 }
 
+types = {
+    'fire': ['aries', 'leo', 'sagittarius'],
+    'earth': ['taurus', 'virgo', 'capricorn'],
+    'air': ['gemini', 'libra', 'aquarius'],
+    'water': ['cancer', 'scorpio', 'pisces']
+}
+
+
+def type(request):
+    li_elem = ''
+    for t in list(types):
+        redirect_path = reverse('horoscope-name', args=[t])
+        li_elem += f"<li> <a href='{redirect_path}'>{t} </a> </li>"
+    resp = f"<ol> {li_elem} </ol>"
+    return HttpResponse(resp)
+
+
+def index(request):
+    zodiac = list(zodiac_dict)
+    li_elements = ''
+    for sign in zodiac:
+        redirect_path = reverse("horoscope-name", args=[sign])
+        li_elements += f"<li> <a href='{redirect_path}'>{sign.title()} </a> </li>"
+    response = f"""
+    <ol>
+        {li_elements}
+    </ol>
+    """
+    return HttpResponse(response)
+
 
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     description = zodiac_dict.get(sign_zodiac, None)
@@ -34,6 +64,6 @@ def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
     zodiacs = list(zodiac_dict)
     if sign_zodiac > len(zodiacs):
         return HttpResponseNotFound(f'Неправильный порядковый номер знака зодиака - {sign_zodiac}')
-    name_zodiac = zodiacs[sign_zodiac-1]
+    name_zodiac = zodiacs[sign_zodiac - 1]
     redirect_urls = reverse("horoscope-name", args=[name_zodiac])
     return HttpResponseRedirect(redirect_urls)
