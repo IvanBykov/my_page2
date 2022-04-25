@@ -34,7 +34,7 @@ def get_elements(request, element: str):
     pass
 
 
-def type(request):
+def get_types(request):
     li_elem = ''
     for t in list(types):
         redirect_path = reverse('type-name', args=[t])
