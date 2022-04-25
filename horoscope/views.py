@@ -28,12 +28,14 @@ types = {
     'water': ['cancer', 'scorpio', 'pisces']
 }
 
+def get_elements(request):
+    pass
 
 def type(request):
     li_elem = ''
     for t in list(types):
-        redirect_path = reverse('horoscope-name', args=[t])
-        li_elem += f"<li> <a href='{redirect_path}'>{t} </a> </li>"
+        #redirect_path = reverse('horoscope-name', args=[t])
+        li_elem += f"<li> <a href='horoscope/type/{t}'>{t} </a> </li>"
     resp = f"<ol> {li_elem} </ol>"
     return HttpResponse(resp)
 
