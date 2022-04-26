@@ -31,7 +31,13 @@ types = {
 
 def get_elements(request, element: str):
     # element_znaks = list(types)
-    pass
+    resp = ''
+    zodiacs = types.get(element)
+    for z in zodiacs:
+        redirect_path = reverse('horoscope-name', args=[z])
+        resp += f"<li> <a href='{redirect_path}' >{z} </a> <?li>"
+    resp = f"<ol> {resp} </ol>"
+    return HttpResponse(resp)
 
 
 def get_types(request):
