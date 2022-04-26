@@ -78,3 +78,12 @@ def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
     name_zodiac = zodiacs[sign_zodiac - 1]
     redirect_urls = reverse("horoscope-name", args=[name_zodiac])
     return HttpResponseRedirect(redirect_urls)
+
+
+def get_info_about_sign_zodiac_by_date(request, month: int, day: int):
+    # return HttpResponse(f"месяц{month} день{day}")
+    day = month * 30 + day
+    index = (day - 80) // 30
+    name_zodiac = list(zodiac_dict)[index - 1]
+    redirect_urls = reverse("horoscope-name", args=[name_zodiac])
+    return HttpResponseRedirect(redirect_urls)
