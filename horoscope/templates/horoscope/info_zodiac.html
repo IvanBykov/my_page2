@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Гороскоп для {{ sign }}</title>
+    <title>Гороскоп для {{ sign|upper }}</title>
 </head>
 <body>
     <h1>Приложение гороскоп</h1>
-    <h2> {{ description_zodiac }} </h2>
-    <p> Число {{ my_int }} </p>
+
+    {% if description_zodiac is None %}
+        <h2> Неправильный знак зодиака {{ sign|upper }} </h2>
+        {% else %}
+        <h2> {{ description_zodiac|title }} </h2>
+    {% endif %}
+    <p> Число {{ my_int|add:my_float }} </p>
     <p> Число вещественное{{ my_float }} </p>
     <p> Список {{ my_list }} </p>
     <p> Кортеж {{ my_tuple }} </p>

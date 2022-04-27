@@ -52,17 +52,22 @@ def get_types(request):
 
 
 def index(request):
-    zodiac = list(zodiac_dict)
-    li_elements = ''
-    for sign in zodiac:
-        redirect_path = reverse("horoscope-name", args=[sign])
-        li_elements += f"<li> <a href='{redirect_path}'>{sign.title()} </a> </li>"
-    response = f"""
-    <ol>
-        {li_elements}
-    </ol>
-    """
-    return HttpResponse(response)
+    zodiacs = list(zodiac_dict)
+    # li_elements = ''
+    # for sign in zodiac:
+    #     redirect_path = reverse("horoscope-name", args=[sign])
+    #     li_elements += f"<li> <a href='{redirect_path}'>{sign.title()} </a> </li>"
+    # response = f"""
+    # <ol>
+    #     {li_elements}
+    # </ol>
+    # """
+    # return HttpResponse(response)
+    context = {
+        'zodiacs': zodiacs,
+        'zodiac_dict': zodiac_dict
+    }
+    return render(request, 'horoscope/index.html', context=context)
 
 
 @dataclass
@@ -85,7 +90,7 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
     description = zodiac_dict.get(sign_zodiac)
     data = {
         'description_zodiac': description,
-        'sign': sign_zodiac.title(),
+        'sign': sign_zodiac,
         'my_int': 111,
         'my_float': 111.5,
         'my_list': [1, 2, 3],
@@ -120,3 +125,11 @@ def get_kianu(request):
         'movie_name': 'Apocalypsis'
     }
     return render(request, 'horoscope/kianu_html.html', context=data)
+
+def get_guinness_world_records(request):
+    context = {
+        'power_man': 'Narve Laeret',
+        'bar_name': 'Bob’s BBQ & Grill',
+        'count_needle': 1790,
+    }
+    return render(request, 'horoscope/guinnessworldrecords.html', context=context)
