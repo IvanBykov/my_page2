@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
+from django.template.loader import render_to_string
+from dataclasses import dataclass
 
 # Create your views here.
 
@@ -63,12 +65,35 @@ def index(request):
     return HttpResponse(response)
 
 
+@dataclass
+class Person:
+    name: str
+    age: int
+
+    def __str__(self):
+        return f'This is {self.name}'
+
+
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
-    description = zodiac_dict.get(sign_zodiac, None)
-    if description:
-        return HttpResponse(description)
-    else:
-        return HttpResponseNotFound(f"Неизвестный знак зодиака - {sign_zodiac}")
+    # description = zodiac_dict.get(sign_zodiac, None)
+    # if description:
+    #    return HttpResponse(description)
+    # else:
+    #   return HttpResponseNotFound(f"Неизвестный знак зодиака - {sign_zodiac}")
+    # response = render_to_string('horoscope/info_zodiac.html')
+    # return HttpResponse(response)
+    description = zodiac_dict.get(sign_zodiac)
+    data = {
+        'description_zodiac': description,
+        'sign': sign_zodiac.title(),
+        'my_int': 111,
+        'my_float': 111.5,
+        'my_list': [1, 2, 3],
+        'my_tuple': (1, 2, 3, 4, 5),
+        'my_dict': {'name': 'Jack', 'age': 40},
+        'my_class': Person('Will', 55)
+    }
+    return render(request, 'horoscope/info_zodiac.html', context=data)
 
 
 def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
@@ -87,3 +112,11 @@ def get_info_about_sign_zodiac_by_date(request, month: int, day: int):
     name_zodiac = list(zodiac_dict)[index - 1]
     redirect_urls = reverse("horoscope-name", args=[name_zodiac])
     return HttpResponseRedirect(redirect_urls)
+
+def get_kianu(request):
+    data = {
+        'year_born': 1978,
+        'city_born': 'London',
+        'movie_name': 'Apocalypsis'
+    }
+    return render(request, 'horoscope/kianu_html.html', context=data)
