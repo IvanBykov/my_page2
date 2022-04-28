@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='horoscope-index'),
     path('type/', views.get_types),
     path('kianu/', views.get_kianu),
     path('guines/', views.get_guinness_world_records),
