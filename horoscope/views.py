@@ -70,7 +70,7 @@ def index(request):
 
 
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
-    # description = zodiac_dict.get(sign_zodiac, None)
+    #zodiacs = list(zodiac_dict)
     # if description:
     #    return HttpResponse(description)
     # else:
@@ -79,8 +79,9 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
     # return HttpResponse(response)
     description = zodiac_dict.get(sign_zodiac)
     data = {
-        'description_zodiac': description,
+        'description': description,
         'sign': sign_zodiac,
+        'zodiacs': zodiac_dict,
     }
     return render(request, 'horoscope/info_zodiac.html', context=data)
 
