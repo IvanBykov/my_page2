@@ -111,6 +111,9 @@ def get_kianu(request):
     }
     return render(request, 'horoscope/kianu_html.html', context=data)
 
+def get_beautiful_table(request):
+    return render(request, 'horoscope/beautiful.html')
+
 def get_guinness_world_records(request):
     context = {
         'power_man': 'Narve Laeret',
